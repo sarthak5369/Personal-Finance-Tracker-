@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Manage money with clarity{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow"><span class="dot"></span> YOUR MONEY, MADE CLEAR</span>
+    <h1>Make every rupee<br><span>count.</span></h1>
+    <p class="hero-text">A simple place to track your income, understand your spending, and feel more in control of your money.</p>
+    <div class="hero-actions">
+      <a class="button primary" href="{{ url_for('register') }}">Create free account <span>→</span></a>
+      <a class="button secondary" href="{{ url_for('login') }}">I already have an account</a>
+    </div>
+    <div class="trust-row"><span>✓ Private transactions</span><span>✓ Clear monthly overview</span></div>
+  </div>
+  <div class="preview-card">
+    <div class="preview-top"><div><small>YOUR BALANCE</small><h2>₹ 42,850.00</h2></div><span class="mini-pill">↗ Overview</span></div>
+    <div class="preview-chart"><div class="chart-labels"><span>Income</span><b>₹ 58,000</b></div><div class="bar"><i style="width:82%"></i></div><div class="chart-labels"><span>Expenses</span><b>₹ 15,150</b></div><div class="bar expense"><i style="width:35%"></i></div></div>
+    <div class="preview-bottom"><span class="round-icon green">↗</span><div><b>Money in</b><small>Salary &amp; freelance</small></div><strong>+₹58,000</strong></div>
+    <div class="preview-bottom"><span class="round-icon orange">↘</span><div><b>Money out</b><small>Living &amp; essentials</small></div><strong>−₹15,150</strong></div>
+    <p class="preview-note">Illustrative preview · sample numbers</p>
+  </div>
+</section>
+<section class="features">
+  <div class="section-heading"><span class="eyebrow">LESS GUESSING, MORE CLARITY</span><h2>Your finances at a glance.</h2></div>
+  <div class="feature-grid">
+    <article class="feature"><span class="feature-icon">↗</span><h3>Track every transaction</h3><p>Keep income and expenses organised with categories and notes.</p></article>
+    <article class="feature"><span class="feature-icon violet">▥</span><h3>See the bigger picture</h3><p>Understand your total income, spending, and available balance.</p></article>
+    <article class="feature"><span class="feature-icon orange">⌁</span><h3>Stay in control</h3><p>Edit records, filter activity, and keep your money history together.</p></article>
+  </div>
+</section>
+{% endblock %}

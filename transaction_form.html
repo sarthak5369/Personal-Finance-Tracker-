@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit" if transaction else "Add" }} transaction{% endblock %}
+{% block content %}
+<section class="form-page">
+  <a class="back-link" href="{{ url_for('transactions_page') }}">← Back to transactions</a>
+  <form class="form-card wide" method="post">
+    <span class="eyebrow">KEEP YOUR RECORDS UP TO DATE</span><h1>{{ "Edit transaction" if transaction else "Add a transaction" }}</h1><p class="muted">Enter the details below. Amounts must be greater than zero.</p>
+    <label for="title">Transaction name</label><input id="title" name="title" required maxlength="120" placeholder="e.g. Monthly salary, Groceries" value="{{ transaction.title if transaction else '' }}">
+    <div class="form-grid">
+      <div><label for="kind">Type</label><select id="kind" name="kind" required><option value="expense" {{ 'selected' if not transaction or transaction.kind == 'expense' else '' }}>Expense</option><option value="income" {{ 'selected' if transaction and transaction.kind == 'income' else '' }}>Income</option></select></div>
+      <div><label for="amount">Amount (₹)</label><input id="amount" name="amount" type="number" min="0.01" max="9999999999.99" step="0.01" required placeholder="0.00" value="{{ transaction.amount if transaction else '' }}"></div>
+    </div>
+    <div class="form-grid">
+      <div><label for="category">Category</label><select id="category" name="category" required><option value="">Choose category</option>{% for cat in ['Salary','Freelance','Food','Transport','Shopping','Bills','Education','Health','Entertainment','Rent','Investment','Other'] %}<option value="{{ cat }}" {{ 'selected' if transaction and transaction.category == cat else '' }}>{{ cat }}</option>{% endfor %}</select></div>
+      <div><label for="transaction_date">Date</label><input id="transaction_date" name="transaction_date" type="date" required value="{{ transaction.transaction_date.isoformat() if transaction else today }}"></div>
+    </div>
+    <label for="note">Note <span class="optional">(optional)</span></label><textarea id="note" name="note" maxlength="500" rows="3" placeholder="Add a little context...">{{ transaction.note if transaction and transaction.note else '' }}</textarea>
+    <button class="button primary full" type="submit">{{ "Save changes" if transaction else "Save transaction" }} →</button>
+  </form>
+</section>
+{% endblock %}

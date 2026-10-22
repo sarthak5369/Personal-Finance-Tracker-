@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><span class="eyebrow">YOUR FINANCIAL SNAPSHOT</span><h1>Good to see you, {{ current_user.name.split()[0] }}.</h1><p>Here's what's happening with your money.</p></div>
+  <a class="button primary" href="{{ url_for('new_transaction') }}">＋ Add transaction</a>
+</section>
+<section class="stats-grid">
+  <article class="stat-card balance-card"><div class="stat-top"><span>Current balance</span><span class="stat-icon">₹</span></div><div class="stat-value">₹{{ "%.2f"|format(balance|float) }}</div><div class="stat-foot">Income minus expenses</div></article>
+  <article class="stat-card"><div class="stat-top"><span>Total income</span><span class="stat-icon green">↗</span></div><div class="stat-value positive">₹{{ "%.2f"|format(income|float) }}</div><div class="stat-foot">All recorded income</div></article>
+  <article class="stat-card"><div class="stat-top"><span>Total expenses</span><span class="stat-icon orange">↘</span></div><div class="stat-value">₹{{ "%.2f"|format(expenses|float) }}</div><div class="stat-foot">All recorded expenses</div></article>
+</section>
+<section class="panel">
+  <div class="panel-heading"><div><h2>Recent transactions</h2><p>Your latest money activity</p></div><a class="text-link" href="{{ url_for('transactions_page') }}">View all →</a></div>
+  {% if transactions %}
+  <div class="table-wrap"><table><thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>AMOUNT</th><th></th></tr></thead><tbody>
+  {% for item in transactions %}
+    <tr><td><div class="transaction-title"><span class="transaction-icon {{ item.kind }}">{{ "↗" if item.kind == "income" else "↘" }}</span><div><b>{{ item.title }}</b><small>{{ item.note or ("Income" if item.kind == "income" else "Expense") }}</small></div></div></td><td><span class="category-chip">{{ item.category }}</span></td><td>{{ item.transaction_date.strftime("%d %b %Y") }}</td><td class="{{ 'positive' if item.kind == 'income' else '' }}">{{ "+" if item.kind == "income" else "−" }}₹{{ "%.2f"|format(item.amount|float) }}</td><td><a class="icon-link" title="Edit transaction" href="{{ url_for('edit_transaction', transaction_id=item.id) }}">↗</a></td></tr>
+  {% endfor %}
+  </tbody></table></div>
+  {% else %}
+  <div class="empty-state"><span class="empty-icon">↗</span><h3>Your money story starts here</h3><p>Add your first income or expense to see your dashboard come to life.</p><a class="button primary" href="{{ url_for('new_transaction') }}">Add your first transaction</a></div>
+  {% endif %}
+</section>
+{% endblock %}
